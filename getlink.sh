@@ -61,7 +61,7 @@ fileUpload(){
 				echo ""
 				echo "#############################################################"
 				echo "Link $response"
-				echo "Zip-password $password"
+				echo "Password $password"
 				echo "#############################################################"
 				echo ""
 
