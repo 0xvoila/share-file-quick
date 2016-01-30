@@ -158,7 +158,6 @@ if [ -e ~/.getlink.conf ]; then
 	G_EMAILID="$emailId"
 	G_PASSWORD="$password"
 
-	echo "picked email id $emailId and password are $password"
 
 else
 	echo "Please create your account first. getlink --configure"
