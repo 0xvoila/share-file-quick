@@ -97,7 +97,8 @@ fileUpload(){
 			if [ "$FILE_CONFIDENTIAL" = "YES" ]; then
 
 				## Now curl this request 
-				response=$(curl -m 5000 -F "emailId=$G_EMAILID" -F "password=G_PASSWORD" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=Y&numShare=0") 
+
+				response=$(curl -m 5000 -F "emailId=$G_EMAILID" -F "password=$G_PASSWORD" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=Y&numShare=0") 
 			
 
 			
