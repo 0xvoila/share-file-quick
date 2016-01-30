@@ -1,24 +1,25 @@
 #!/bin/sh
 
-usage="$(basename "$0") [-h] [-n] -- command line utility to quickly share any file or folder on your computer.
+usage="$(basename "$0") [-h] [-p] -- command line utility to quickly share any file or folder on your computer.
 
 
 where:
     -h  show help
-    -p  Make file password protected "
+    -p  Make file password protected 
+    -n  Restrict number of shares"
 
 
 fileUpload(){
 
-	FILE_SENSITIVE="$4"
+	FILE_CONFIDENTIAL="$4"
 
-	if [ "$2" -eq 1 ] && [ ! -d "$1" ] && [ "$FILE_SENSITIVE" = "NO" ]; then
+	if [ "$2" -eq 1 ] && [ ! -d "$1" ] && [ "$FILE_CONFIDENTIAL" = "NO" ]; then
 		
 		## Now curl this request 
 
 		echo "Hold tight, creating sharable link. This may take some time"
 		echo ""
-		response=$(curl -m 5000 -F "zip_file=@$1" http://kikimazu.in/api/server.php)
+		response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=0&numShare=0")
 		
 		echo ""
 		echo "#############################################################"
@@ -27,20 +28,11 @@ fileUpload(){
 		echo ""
 	
 	else 
-		echo "zipping"
+		
 		tempFile=$RANDOM
 
-		if [ "$FILE_SENSITIVE" = "NO" ]; then
+		cmd="zip -r /tmp/$tempFile.zip "
 
-			cmd="zip -r /tmp/$tempFile.zip "
-
-		else 
-
-			password=$RANDOM
-			cmd="zip -P $password -r /tmp/$tempFile.zip "
-		
-		fi  
-		
 		for var in "$3"
 		do 
 			cmd="$cmd $var"
@@ -52,11 +44,13 @@ fileUpload(){
 
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
-			
-			## Now curl this request 
-			response=$(curl -m 5000 -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" http://kikimazu.in/api/server.php) 
-			
+		
 			if [ "$FILE_SENSITIVE" = "YES" ]; then
+
+				## Now curl this request 
+				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=1&numShare=0") 
+			
+
 			
 				echo ""
 				echo "#############################################################"
@@ -67,6 +61,7 @@ fileUpload(){
 
 			else 
 
+				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=0&numShare=0")
 				echo ""
 				echo "#############################################################"
 				echo "Link $response"
@@ -85,7 +80,9 @@ fileUpload(){
 }
 
 
-FILE_SENSITIVE="NO"
+### Check if user has account on sever 
+
+FILE_CONFIDENTIAL="NO"
 while getopts hp name 
 do
 
@@ -131,7 +128,6 @@ fi
 
 
 ### Now take each argument and check if file exists or it is folder 
-
 found=0
 temp=''
 for var in "$@"
