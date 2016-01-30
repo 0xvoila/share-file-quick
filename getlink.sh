@@ -16,13 +16,11 @@ signup(){
  	read -p "emailid:" emailId
  	read -p "password:" password
 
- 	response=$(curl -F "emailId=$emailId" -F "password=$password" "http://kikimazu.in/signup.php")
-
- 	echo "this is reponse $response"
+ 	response=$(curl -s -F "emailId=$emailId" -F "password=$password" "http://kikimazu.in/signup.php")
 
  	if [ "$response" -eq 0 ]; then 
 
- 		echo '#!/bin/sh' >> ~/.getlink.conf
+ 		echo '#!/bin/sh' > ~/.getlink.conf
  		echo "emailId=$emailId" >> ~/.getlink.conf
  		echo "password=$password" >> ~/.getlink.conf
 
