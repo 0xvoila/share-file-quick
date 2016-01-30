@@ -20,7 +20,7 @@ fileUpload(){
 
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
-			response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=0&numShare=0")
+			response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=N&numShare=0")
 		
 			echo ""
 			echo "#############################################################"
@@ -34,7 +34,7 @@ fileUpload(){
 
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
-			response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=1&numShare=0")
+			response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=Y&numShare=0")
 		
 			echo ""
 			echo "#############################################################"
@@ -44,7 +44,7 @@ fileUpload(){
 			echo ""
 
 		fi 
-			
+
 	else 
 		
 		tempFile=$RANDOM
@@ -66,7 +66,7 @@ fileUpload(){
 			if [ "$FILE_CONFIDENTIAL" = "YES" ]; then
 
 				## Now curl this request 
-				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=1&numShare=0") 
+				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=Y&numShare=0") 
 			
 
 			
@@ -79,7 +79,7 @@ fileUpload(){
 
 			else 
 
-				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=0&numShare=0")
+				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=N&numShare=0")
 				echo ""
 				echo "#############################################################"
 				echo "Link $response"
