@@ -48,7 +48,7 @@ fileUpload(){
 		
 		if [ "$FILE_CONFIDENTIAL" = "NO" ]; then 
 			## Now curl this request 
-
+			echo ""	
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
 			response=$(curl -m 5000 -F "emailId=$G_EMAILID" -F "password=$G_PASSWORD" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=N&numShare=0")
@@ -62,7 +62,7 @@ fileUpload(){
 		else 
 
 			## Now curl this request 
-
+			echo ""	
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
 			response=$(curl -m 5000 -F "emailId=$G_EMAILID" -F "password=$G_PASSWORD" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=Y&numShare=0")
@@ -90,6 +90,7 @@ fileUpload(){
 
 		if [ $? -eq 0 ]; then
 
+			echo ""	
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
 		
