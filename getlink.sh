@@ -175,7 +175,7 @@ if [ -e ~/.getlink.conf ]; then
 
 
 else
-	echo "Please create your account first. getlink --configure"
+	echo "Please create your account first using getlink --c"
 	exit 0;
 
 fi
