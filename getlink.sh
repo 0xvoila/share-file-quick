@@ -2,12 +2,45 @@
 
 usage="$(basename "$0") [-h] [-p] -- command line utility to quickly share any file or folder on your computer.
 
-
 where:
     -h  show help
     -p  Make file password protected 
     -n  Restrict number of shares"
 
+
+G_EMAILID=""
+G_PASSWORD=""
+
+signup(){
+
+ 	read -p "emailid:" emailId
+ 	read -p "password:" password
+
+ 	response=$(curl -F "emailId=$emailId" -F "password=$password" "http://kikimazu.in/signup.php")
+
+ 	echo "this is reponse $response"
+
+ 	if [ "$response" -eq 0 ]; then 
+
+ 		echo '#!/bin/sh' >> ~/.getlink.conf
+ 		echo "emailId=$emailId" >> ~/.getlink.conf
+ 		echo "password=$password" >> ~/.getlink.conf
+
+ 	elif [ "$response" -eq 1 ]; then 
+ 		 echo "$emailId already exists. Please choose another email id "
+ 		 exit 0
+
+ 	elif [ "$response" -eq 2 ]; then 
+ 		echo "Unable to signup. Please contact admin"
+ 		exit 0
+
+ 	else 
+ 		echo "some error"
+
+ 	fi
+
+ 	exit 0;
+}
 
 fileUpload(){
 
@@ -20,7 +53,7 @@ fileUpload(){
 
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
-			response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=N&numShare=0")
+			response=$(curl -m 5000 -F "emailId=$G_EMAILID" -F "password=$G_PASSWORD" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=N&numShare=0")
 		
 			echo ""
 			echo "#############################################################"
@@ -34,7 +67,7 @@ fileUpload(){
 
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
-			response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=Y&numShare=0")
+			response=$(curl -m 5000 -F "emailId=$G_EMAILID" -F "password=$G_PASSWORD" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=Y&numShare=0")
 		
 			echo ""
 			echo "#############################################################"
@@ -65,7 +98,7 @@ fileUpload(){
 			if [ "$FILE_CONFIDENTIAL" = "YES" ]; then
 
 				## Now curl this request 
-				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=Y&numShare=0") 
+				response=$(curl -m 5000 -F "emailId=$G_EMAILID" -F "password=G_PASSWORD" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=Y&numShare=0") 
 			
 
 			
@@ -77,7 +110,7 @@ fileUpload(){
 
 			else 
 
-				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=N&numShare=0")
+				response=$(curl -m 5000 -F "emailId=$G_EMAILID" -F "password=$G_PASSWORD" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=N&numShare=0")
 				echo ""
 				echo "#############################################################"
 				echo "$response" | xargs
@@ -96,10 +129,9 @@ fileUpload(){
 }
 
 
-### Check if user has account on sever 
 
 FILE_CONFIDENTIAL="NO"
-while getopts hp name 
+while getopts hpc name 
 do
 
 	case $name in
@@ -108,7 +140,8 @@ do
 
 		p) FILE_CONFIDENTIAL="YES";;
 			
-       
+       	c) signup ;;
+
         \?) printf "illegal option: -%s\n" "$OPTARG" >&2
        		echo "$usage" >&2
        		exit 1;;
@@ -117,6 +150,24 @@ do
 done
 
 shift $(($OPTIND -1))
+
+### Check if user has account on sever 
+
+if [ -e ~/.getlink.conf ]; then 
+
+	. ~/.getlink.conf
+
+	G_EMAILID="$emailId"
+	G_PASSWORD="$password"
+
+	echo "picked email id $emailId and password are $password"
+
+else
+	echo "Please create your account first. getlink --configure"
+	exit 0;
+
+fi
+
 
 ## First check if zip is installed 
 
