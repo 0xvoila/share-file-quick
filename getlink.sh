@@ -186,7 +186,7 @@ fi
 zip --help > /dev/null 2>&1
 
 if [ $? -ne 0 ]; then 
-	echo "Please install zip first."
+	echo "Please install zip."
 	exit 0;
 
 fi 
@@ -201,7 +201,7 @@ fi
 
 ### Now check the command line arguments
 if [ $# -eq 0 ]; then
-    echo "No file to share is given"
+    echo "No file provided as argument"
     exit 0;
 fi
 
