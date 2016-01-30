@@ -13,20 +13,38 @@ fileUpload(){
 
 	FILE_CONFIDENTIAL="$4"
 
-	if [ "$2" -eq 1 ] && [ ! -d "$1" ] && [ "$FILE_CONFIDENTIAL" = "NO" ]; then
+	if [ "$2" -eq 1 ] && [ ! -d "$1" ]; then
 		
-		## Now curl this request 
+		if [ "$FILE_CONFIDENTIAL" = "NO" ]; then 
+			## Now curl this request 
 
-		echo "Hold tight, creating sharable link. This may take some time"
-		echo ""
-		response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=0&numShare=0")
+			echo "Hold tight, creating sharable link. This may take some time"
+			echo ""
+			response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=0&numShare=0")
 		
-		echo ""
-		echo "#############################################################"
-		echo "Link $response"
-		echo "#############################################################"
-		echo ""
-	
+			echo ""
+			echo "#############################################################"
+			echo "Link $response"
+			echo "#############################################################"
+			echo ""
+
+		else 
+
+			## Now curl this request 
+
+			echo "Hold tight, creating sharable link. This may take some time"
+			echo ""
+			response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@$1" "http://kikimazu.in/server.php?isConfi=1&numShare=0")
+		
+			echo ""
+			echo "#############################################################"
+			echo "Link $response"
+			echo "Password $password"
+			echo "#############################################################"
+			echo ""
+
+		fi 
+			
 	else 
 		
 		tempFile=$RANDOM
@@ -45,7 +63,7 @@ fileUpload(){
 			echo "Hold tight, creating sharable link. This may take some time"
 			echo ""
 		
-			if [ "$FILE_SENSITIVE" = "YES" ]; then
+			if [ "$FILE_CONFIDENTIAL" = "YES" ]; then
 
 				## Now curl this request 
 				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=1&numShare=0") 
