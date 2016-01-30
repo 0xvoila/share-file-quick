@@ -1,11 +1,11 @@
 #!/bin/sh
 
-usage="$(basename "$0") [-h] [-p] -- command line utility to quickly share any file or folder on your computer.
+usage="$(basename "$0") [-h] [-p] [-c]-- command line utility to quickly share any file or folder on your computer.
 
 where:
     -h  show help
     -p  Make file password protected 
-    -n  Restrict number of shares"
+    -c  create a new account"
 
 
 G_EMAILID=""
@@ -37,6 +37,19 @@ signup(){
 
  	fi
 
+ 	echo ""
+ 	echo "Welcome User."
+ 	echo "Below are some examples"
+ 	echo ""
+ 	echo "Get sharable link of single file"
+ 	echo "$> getlink.sh file1"
+ 	echo ""
+ 	echo "Get sharable link of multiple files and folders"
+ 	echo "$> getlink.sh file1 folder2"
+ 	echo ""
+ 	echo "Get password protected sharable link of multiple files and folders"
+ 	echo "$> getlink.sh -p file1 folder2"
+ 	echo ""
  	exit 0;
 }
 
