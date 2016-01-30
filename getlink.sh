@@ -24,7 +24,7 @@ fileUpload(){
 		
 			echo ""
 			echo "#############################################################"
-			echo "Link $response"
+			echo "$response" | xargs
 			echo "#############################################################"
 			echo ""
 
@@ -38,8 +38,7 @@ fileUpload(){
 		
 			echo ""
 			echo "#############################################################"
-			echo "Link $response"
-			echo "Password $password"
+			echo "$response" | xargs
 			echo "#############################################################"
 			echo ""
 
@@ -72,8 +71,7 @@ fileUpload(){
 			
 				echo ""
 				echo "#############################################################"
-				echo "Link $response"
-				echo "Password $password"
+				echo "$response" | xargs
 				echo "#############################################################"
 				echo ""
 
@@ -82,7 +80,7 @@ fileUpload(){
 				response=$(curl -m 5000 -F "emailId=amit.aggarwal@shawacademy.com" -F "password=2June1989!" -F "zip_file=@/tmp/$tempFile.zip;type=application/zip" "http://kikimazu.in/server.php?isConfi=N&numShare=0")
 				echo ""
 				echo "#############################################################"
-				echo "Link $response"
+				echo "$response" | xargs
 				echo "#############################################################"
 				echo ""				
 
