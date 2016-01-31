@@ -16,6 +16,9 @@ signup(){
  	read -p "emailid:" emailId
  	read -p "password:" password
 
+ 	echo "Create a new account"
+ 	echo ""
+ 	
  	response=$(curl -s -F "emailId=$emailId" -F "password=$password" "http://kikimazu.in/signup.php")
 
  	if [ "$response" -eq 0 ]; then 
