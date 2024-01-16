@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# This is cool utility
 usage="$(basename "$0") [-h] [-p] [-c]-- command line utility to quickly share any file or folder on your computer.
 
 where:
