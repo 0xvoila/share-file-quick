@@ -1,4 +1,4 @@
-## Share any file or folder on your computer directly from terminal.
+# Share any file or folder on your computer directly from terminal.
 `getlink` is command line utility to generate sharable link of **any file or folder on your machine** to share it with anyone. You can create a password protected file-share by passing `-p` flag to this shell script. There is a limit of 100MB file can be shared.
 
 # Usage
